@@ -2,20 +2,33 @@ import os
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
+# 한글 인코딩 설정
+import sys
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8')
+
 def folder_select():
     global dir_path
     dir_path = filedialog.askdirectory(initialdir="/", title="폴더를 선택 해 주세요")
     if not dir_path:
         messagebox.showwarning("경고", "폴더를 선택 하세요")
     else:
-        res = os.listdir(dir_path)
+        res = list_files(dir_path)
         ent2.delete(0, tk.END)
         if not res:
-            messagebox.showwarning("경고", "폴더내 파일이 없습니다.")
+            messagebox.showwarning("경고", "폴더 내에 파일이 없습니다.")
         else:
             ent2.insert(0, dir_path)
             for file in res:
                 treeview.insert("", "end", values=[dir_path, file], iid=file)
+
+def list_files(startpath):
+    file_list = []
+    for root, dirs, files in os.walk(startpath):
+        for file in files:
+            file_list.append(file)
+    return file_list
 
 def fileNm_search():
     fileNm = ent1.get()
@@ -36,13 +49,14 @@ def fileNm_search():
 
 root = tk.Tk()
 root.title("Camp Lee Python")
-root.geometry("390x290")
+root.geometry("815x290")
+root.resizable(False, False)  # 수평 및 수직 크기 조절 비활성화
 
 dir_path = None
 treeview = ttk.Treeview(root, columns=["path", "fileName"], displaycolumns=["path", "fileName"])
-treeview.column("path", width=190, anchor="center")
+treeview.column("path", width=400, anchor="center")
 treeview.heading("path", text="경로", anchor="center")
-treeview.column("fileName", width=190, anchor="center")
+treeview.column("fileName", width=400, anchor="center")
 treeview.heading("fileName", text="파일명", anchor="center")
 treeview["show"] = "headings"
 
