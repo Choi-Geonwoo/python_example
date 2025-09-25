@@ -31,11 +31,11 @@ title_text = f"{start_date.year}년{start_date.month:02d}월{start_date.day:02d}
 # ----------------------------
 # 3) 이미지 경로
 # ----------------------------
-cover_img = "C:/images/cover.png"
-pension_img = "C:/images/pension.png"
-buy_img = "C:/images/buy.png"
-sell_img = "C:/images/sell.png"
-retirement_img = "C:/images/retirement.png"
+cover_img = null
+pension_img = null
+buy_img = null
+sell_img = null
+retirement_img = null
 
 # ----------------------------
 # 4) 본문 텍스트
